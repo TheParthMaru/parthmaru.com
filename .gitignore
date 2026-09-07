@@ -41,3 +41,7 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# Local packaging / superseded context (not source of truth)
+parthmaru_cursor_context.zip
+parthmaru_portfolio_project_context.md
