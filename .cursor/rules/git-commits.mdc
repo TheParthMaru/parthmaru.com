@@ -1,0 +1,25 @@
+---
+description: One-line git commit messages for parthmaru.com
+alwaysApply: true
+---
+
+# Git commit messages
+
+Write commit messages as a single line only. No body, no footer, no HEREDOC extra paragraphs.
+
+Prefer conventional commits with a scope when useful:
+
+```text
+feat(home): add non-sticky navbar
+fix(writing): skip empty GitHub links
+chore: add Astro/npm gitignore
+docs(product): lock MVP clarifications
+```
+
+Do not write multi-line messages like:
+
+```text
+chore: add Astro/npm gitignore
+
+Keep dependencies, build output, and env files out of version control.
+```

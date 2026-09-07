@@ -1,0 +1,71 @@
+---
+description: Core product, visual, content, and architecture rules for parthmaru.com
+alwaysApply: true
+---
+
+# parthmaru.com project rule
+
+This is Parth Maru's personal portfolio and technical publishing website.
+
+Before significant implementation or design work, use these repository documents as the source of truth:
+
+- @docs/PROJECT.md
+- @docs/DESIGN.md
+- @docs/HOMEPAGE.md
+- @docs/CONTENT.md
+- @docs/ARCHITECTURE.md
+- @docs/DECISIONS.md
+- @docs/IMPLEMENTATION_PLAN.md
+
+The approved homepage visual reference is `mockups/homepage-final.png`.
+
+Documentation is product law. The mockup is visual direction. Mockup copy is illustrative unless confirmed in the docs or provided by Parth.
+
+## Non-negotiable product rules
+
+- Build the MVP, not hypothetical future infrastructure.
+- Top-level navigation is Home, Projects, Writing, About.
+- Use `PM` as the navbar mark. Do not repeat `Parth Maru` beside it.
+- The full name appears prominently in the hero.
+- Social links belong in the footer.
+- No top-level Notes section in the MVP.
+- No top-level Build Log section in the MVP.
+- BugTracker is the initial featured project and must not be duplicated immediately beside itself as a recent project.
+- Do not invent sections, content, achievements, dates, metrics, technologies, or social URLs.
+- Keep content file-based and easy to publish.
+- Markdown is the default content format. Use MDX only when a specific entry needs embedded components.
+- Currently values come from a local config file. `Currently → Writing` is in progress; Recent Writing is published.
+- A minimal content-collection setup must exist before homepage Projects/Writing sections are wired to content.
+- Avoid unnecessary dependencies and browser JavaScript.
+- V1 is dark-only. Do not implement a theme switcher.
+- Navbar is initially non-sticky.
+- MVP footer is copyright, GitHub, LinkedIn, X, and Email only.
+- Canonical closing philosophy: “Build. Learn. Document. Improve.”
+- GitHub notes, if linked, are a subtle text link, not a homepage card.
+- Do not implement decorative vertical slogans or other mockup artifacts literally.
+
+## Visual rules
+
+Follow the approved dark editorial direction:
+
+- spacious
+- calm
+- technical
+- atmospheric
+- minimal
+- thin borders/dividers
+- restrained surfaces/cards
+- serif display headings
+- clean sans body
+- subtle monospace metadata
+- muted blue/green/purple/orange accents
+
+Avoid generic flashy developer-portfolio patterns.
+
+## Working style
+
+Make small reviewable changes and implement one section/phase at a time.
+
+Write git commit messages as a single line using conventional commits. Do not add a body.
+
+Before a large departure from the mockup or docs, follow the docs and decision log rather than silently redesigning the site.
