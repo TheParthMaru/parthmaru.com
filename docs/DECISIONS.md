@@ -100,9 +100,8 @@ Characteristics:
 
 - deep charcoal/navy background
 - spacious layout
-- editorial serif headings
-- clean sans body text
-- subtle monospace metadata
+- Fira Code as the global UI typeface (self-hosted)
+- hierarchy via size, weight, spacing, case, and colour — not mixed families
 - muted blue/green/purple/orange accents
 - thin dividers
 - atmospheric imagery
@@ -173,3 +172,16 @@ Currently remains a separate local config file, not a content collection.
 **Date:** 2026-09-07
 
 The static host will be chosen during the deployment phase. Do not introduce hosting-specific infrastructure earlier.
+
+## D020 — Fira Code as the UI typeface
+
+**Status:** Accepted  
+**Date:** 2026-09-07
+
+The homepage and global UI use self-hosted Fira Code as the single primary font, including navbar, hero name, role, body, buttons, labels, section headings, and metadata.
+
+Ship the font with the site (Fontsource). Do not depend on Fira Code being installed on the visitor’s computer.
+
+Do not use a decorative serif for `Parth Maru` or `PM`. Keep the name visually dominant through size and weight (600), not a second typeface. Do not make all text bold.
+
+Long-form article typography may be reconsidered later.

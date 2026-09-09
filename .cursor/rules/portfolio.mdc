@@ -55,9 +55,8 @@ Follow the approved dark editorial direction:
 - minimal
 - thin borders/dividers
 - restrained surfaces/cards
-- serif display headings
-- clean sans body
-- subtle monospace metadata
+- Fira Code for the global UI (self-hosted)
+- hierarchy via size, weight, spacing, case, and colour
 - muted blue/green/purple/orange accents
 
 Avoid generic flashy developer-portfolio patterns.

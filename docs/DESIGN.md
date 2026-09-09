@@ -220,17 +220,23 @@ V1 is dark-only. Do not implement a light theme or theme switcher.
 
 ## 11. Typography
 
-The design should use three typographic roles:
+The homepage and global UI use a **single technical typeface**.
 
-1. **Editorial display serif** — major headings and selected emphasis.
-2. **Clean sans-serif** — body copy and navigation.
-3. **Restrained monospace** — technical metadata, labels, dates, and small developer-oriented details.
+Initial family: **Fira Code** (self-hosted variable font via Fontsource).
 
-Do not select an unusual font simply to appear distinctive.
+The site must ship the font files with the build so visitors see Fira Code even if it is not installed on their machine. Do not rely on a locally installed copy.
 
-Font choice should prioritize readability, strong cross-platform rendering, sensible loading performance, and a mature editorial feel.
+Do not mix a decorative serif or a separate sans family into the UI. Hierarchy comes from size, weight, line height, letter spacing, case, and colour — not from switching typefaces.
 
-Do not lock a font family until the first browser implementation is visually reviewed.
+Weight guidance:
+
+- 400 for body, navigation, labels, and most UI text
+- 500 for selected emphasis (mark, primary buttons, section headings)
+- 600 only for the dominant hero name
+
+Long-form article typography may be reconsidered later. Do not introduce a second family for articles until that work is specified.
+
+Font loading should stay small. Do not add extra families simply to appear distinctive.
 
 ## 12. Borders, shadows, and surfaces
 
