@@ -1,0 +1,208 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/writing", label: "Writing" },
+  { href: "/about", label: "About" },
+] as const;
+
+function isCurrent(href: string) {
+  if (href === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-mark" href="/" aria-label="Parth Maru home">PM</a>
+    <button
+      type="button"
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      aria-label="Open menu"
+    >
+      Menu
+    </button>
+    <nav id="primary-nav" class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        {
+          links.map((link) => {
+            const current = isCurrent(link.href);
+
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={current ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector(".site-header");
+  const toggle = header?.querySelector<HTMLButtonElement>(".nav-toggle");
+  const nav = header?.querySelector("#primary-nav");
+
+  function setOpen(open: boolean) {
+    if (!header || !toggle) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    header.toggleAttribute("data-nav-open", open);
+  }
+
+  toggle?.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  nav?.addEventListener("click", (event) => {
+    if (event.target instanceof HTMLAnchorElement) {
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const wasOpen = toggle?.getAttribute("aria-expanded") === "true";
+    setOpen(false);
+    if (wasOpen) toggle?.focus();
+  });
+</script>
+
+<style is:global>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-4);
+    min-height: var(--nav-height);
+  }
+
+  .site-mark {
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    margin-left: auto;
+    padding: 0 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .site-nav {
+    display: none;
+    flex-basis: 100%;
+    padding-bottom: var(--space-3);
+  }
+
+  .site-header[data-nav-open] .site-nav {
+    display: block;
+  }
+
+  .site-nav__list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    min-height: 2.75rem;
+    padding-inline: 0;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .site-nav a[aria-current="page"] {
+    color: var(--text);
+    background-image: linear-gradient(var(--accent-blue), var(--accent-blue));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 1px;
+  }
+
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
+    color: var(--text);
+  }
+
+  @media (min-width: 48rem) {
+    .nav-toggle {
+      display: none;
+    }
+
+    .site-nav,
+    .site-header[data-nav-open] .site-nav {
+      display: block;
+      flex-basis: auto;
+      padding-bottom: 0;
+    }
+
+    .site-nav__list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0 0.35rem;
+    }
+
+    .site-nav a {
+      width: auto;
+      padding-inline: 0.45rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .site-mark {
+      font-size: 1.25rem;
+    }
+
+    .site-nav a {
+      padding-inline: 0.6rem;
+    }
+  }
+</style>

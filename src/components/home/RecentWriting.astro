@@ -1,0 +1,104 @@
+---
+export interface ArticleSummary {
+  id: string;
+  title: string;
+  date: Date;
+  description?: string;
+  tags: string[];
+}
+
+interface Props {
+  articles: ArticleSummary[];
+  notesUrl?: string;
+}
+
+const { articles, notesUrl } = Astro.props;
+
+const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+  month: "short",
+  year: "numeric",
+});
+---
+
+<section class="recent-writing" aria-labelledby="recent-writing-heading">
+  <h2 id="recent-writing-heading" class="section-heading">Recent Writing</h2>
+  {
+    articles.length === 0 ? (
+      <p class="empty-note">No published articles yet.</p>
+    ) : (
+      <ul>
+        {articles.map((article) => (
+          <li>
+            <a class="writing-row" href={`/writing/${article.id}`}>
+              <time datetime={article.date.toISOString()}>
+                {dateFormatter.format(article.date)}
+              </time>
+              <span class="writing-row__title">{article.title}</span>
+              {article.description ? (
+                <span class="writing-row__desc">{article.description}</span>
+              ) : null}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    notesUrl ? (
+      <p class="recent-writing__notes">
+        <a class="text-link" href={notesUrl} rel="noreferrer">
+          Technical notes on GitHub →
+        </a>
+      </p>
+    ) : null
+  }
+</section>
+
+<style>
+  .recent-writing ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .recent-writing li + li {
+    border-top: 1px solid var(--border);
+  }
+
+  .writing-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-block: var(--space-4);
+    text-decoration: none;
+  }
+
+  time {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .writing-row__title {
+    color: var(--text);
+    font-size: var(--text-md);
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  .writing-row__desc {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
+  .writing-row:hover .writing-row__title,
+  .writing-row:focus-visible .writing-row__title {
+    color: var(--accent-blue);
+  }
+
+  .recent-writing__notes {
+    margin: var(--space-5) 0 0;
+  }
+</style>

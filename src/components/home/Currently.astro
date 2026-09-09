@@ -1,0 +1,170 @@
+---
+import { currently } from "../../data/currently";
+
+const icons = {
+  learning: {
+    label: "Book",
+    paths: [
+      "M4 19.5A2.5 2.5 0 0 1 6.5 17H20",
+      "M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z",
+    ],
+  },
+  building: {
+    label: "Code",
+    paths: ["m8 8-4 4 4 4", "m16 8 4 4-4 4", "m13 5-2 14"],
+  },
+  exploring: {
+    label: "Compass",
+    paths: [
+      "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z",
+      "m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12Z",
+    ],
+  },
+  writing: {
+    label: "Pencil",
+    paths: ["M12 20h9", "M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"],
+  },
+} as const;
+---
+
+<section class="currently" aria-labelledby="currently-heading">
+  <div class="container">
+    <h2 id="currently-heading" class="section-heading">Currently</h2>
+    <ul class="currently__list">
+      {
+        currently.map((item) => {
+          const icon = icons[item.id];
+
+          return (
+            <li class={`currently__item currently__item--${item.accent}`}>
+              <span class="currently__icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <title>{icon.label}</title>
+                  {icon.paths.map((d) => (
+                    <path d={d} />
+                  ))}
+                </svg>
+              </span>
+              <div class="currently__copy">
+                <p class="currently__label">{item.label}</p>
+                <p class="currently__value">{item.value}</p>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .currently {
+    padding-block: var(--space-6) var(--space-7);
+    border-top: 1px solid var(--border);
+  }
+
+  .currently__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .currently__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    min-width: 0;
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+
+  .currently__item--green {
+    --item-accent: var(--accent-green);
+  }
+
+  .currently__item--blue {
+    --item-accent: var(--accent-blue);
+  }
+
+  .currently__item--purple {
+    --item-accent: var(--accent-purple);
+  }
+
+  .currently__item--orange {
+    --item-accent: var(--accent-orange);
+  }
+
+  .currently__icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--item-accent) 16%, transparent);
+    color: var(--item-accent);
+  }
+
+  .currently__icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .currently__copy {
+    min-width: 0;
+  }
+
+  .currently__label {
+    margin: 0;
+    color: var(--item-accent);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+
+  .currently__value {
+    margin: 0.35rem 0 0;
+    color: var(--text);
+    font-size: var(--text-md);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 40rem) {
+    .currently__list {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .currently {
+      padding-block: var(--space-5) var(--space-6);
+    }
+
+    .currently .section-heading {
+      margin-bottom: var(--space-4);
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .currently__list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+  }
+</style>

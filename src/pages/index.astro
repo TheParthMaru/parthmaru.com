@@ -1,0 +1,109 @@
+---
+import { getCollection } from "astro:content";
+import Closing from "../components/home/Closing.astro";
+import Currently from "../components/home/Currently.astro";
+import FeaturedProject from "../components/home/FeaturedProject.astro";
+import Hero from "../components/home/Hero.astro";
+import ProjectList from "../components/home/ProjectList.astro";
+import RecentWriting from "../components/home/RecentWriting.astro";
+import { site } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const projectEntries = await getCollection("projects");
+const featuredEntry = projectEntries.find((entry) => entry.data.featured);
+const recentProjects = projectEntries
+	.filter((entry) => !entry.data.featured)
+	.map((entry) => ({
+		id: entry.id,
+		title: entry.data.title,
+		description: entry.data.description,
+		placeholder: entry.data.placeholder,
+		tags: entry.data.tags,
+	}));
+
+let writingEntries: Awaited<ReturnType<typeof getCollection<"writing">>> = [];
+try {
+	writingEntries = await getCollection("writing");
+} catch {
+	writingEntries = [];
+}
+
+const articles = writingEntries
+	.filter((entry) => !entry.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 4)
+	.map((entry) => ({
+		id: entry.id,
+		title: entry.data.title,
+		date: entry.data.date,
+		description: entry.data.description,
+		tags: entry.data.tags,
+	}));
+
+const featured = featuredEntry
+	? {
+			id: featuredEntry.id,
+			title: featuredEntry.data.title,
+			description: featuredEntry.data.description,
+			status: featuredEntry.data.status,
+			tags: featuredEntry.data.tags,
+			github: featuredEntry.data.github || undefined,
+			hasJournal: featuredEntry.data.hasJournal,
+		}
+	: undefined;
+---
+
+<BaseLayout>
+	<Hero />
+	<Currently />
+	<section class="work" aria-label="Selected work and writing">
+		<div class="container work__grid">
+			<ProjectList projects={recentProjects} />
+			{
+				featured ? (
+					<FeaturedProject project={featured} />
+				) : (
+					<p class="empty-note">No featured project yet.</p>
+				)
+			}
+			<RecentWriting articles={articles} notesUrl={site.notesUrl || undefined} />
+		</div>
+	</section>
+	<Closing />
+</BaseLayout>
+
+<style>
+	.work {
+		padding-block: var(--space-4) var(--space-7);
+		border-top: 1px solid var(--border);
+	}
+
+	.work__grid {
+		display: grid;
+		gap: var(--space-7);
+	}
+
+	.work__grid > * {
+		min-width: 0;
+	}
+
+	@media (min-width: 64rem) {
+		.work {
+			padding-block: var(--space-4) var(--space-5);
+		}
+	}
+
+	@media (min-width: 75rem) {
+		.work__grid {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+			gap: var(--space-5) var(--space-5);
+			align-items: start;
+		}
+
+		.work__grid > :nth-child(1),
+		.work__grid > :nth-child(2) {
+			padding-right: var(--space-5);
+			border-right: 1px solid var(--border);
+		}
+	}
+</style>

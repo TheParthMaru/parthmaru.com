@@ -1,0 +1,89 @@
+---
+export interface ProjectSummary {
+  id: string;
+  title: string;
+  description: string;
+  placeholder?: boolean;
+  tags: string[];
+}
+
+interface Props {
+  projects: ProjectSummary[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="project-list" aria-labelledby="recent-projects-heading">
+  <h2 id="recent-projects-heading" class="section-heading">Recent Projects</h2>
+  {
+    projects.length === 0 ? (
+      <p class="empty-note">No additional projects to show yet.</p>
+    ) : (
+      <ul>
+        {projects.map((project) => (
+          <li>
+            <a class="project-row" href={`/projects/${project.id}`}>
+              <span class="project-row__title">
+                {project.title}
+                {project.placeholder ? (
+                  <span class="placeholder-flag">Placeholder</span>
+                ) : null}
+              </span>
+              <span class="project-row__desc">{project.description}</span>
+              {project.tags.length > 0 ? (
+                <ul class="tag-list">
+                  {project.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
+
+<style>
+  .project-list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-list li + li {
+    border-top: 1px solid var(--border);
+  }
+
+  .project-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-block: var(--space-4);
+    text-decoration: none;
+  }
+
+  .project-row__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.75rem;
+    color: var(--text);
+    font-size: var(--text-md);
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  .project-row__desc {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
+  .project-row:hover .project-row__title,
+  .project-row:focus-visible .project-row__title {
+    color: var(--accent-blue);
+  }
+</style>

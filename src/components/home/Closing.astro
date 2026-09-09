@@ -1,0 +1,77 @@
+---
+import closingLandscape from "../../assets/footer.png";
+---
+
+<section class="closing" aria-labelledby="closing-line">
+  <div class="closing__visual" aria-hidden="true">
+    <img
+      src={closingLandscape.src}
+      alt=""
+      width={closingLandscape.width}
+      height={closingLandscape.height}
+    />
+  </div>
+  <div class="container closing__content">
+    <p id="closing-line">Build. Learn. Document. Improve.</p>
+  </div>
+</section>
+
+<style>
+  .closing {
+    position: relative;
+    margin-top: var(--space-7);
+    min-height: 12rem;
+    overflow: hidden;
+  }
+
+  .closing__visual {
+    position: absolute;
+    inset: 0;
+  }
+
+  .closing__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
+  }
+
+  .closing__visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 16, 24, 0.55);
+  }
+
+  .closing__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    min-height: 12rem;
+    padding-block: var(--space-6);
+  }
+
+  @media (min-width: 64rem) {
+    .closing {
+      min-height: 11.5rem;
+      margin-top: var(--space-6);
+    }
+
+    .closing__content {
+      min-height: 11.5rem;
+      padding-block: var(--space-5);
+    }
+  }
+
+  #closing-line {
+    margin: 0;
+    max-width: 36rem;
+    color: var(--text);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.45;
+    overflow-wrap: break-word;
+  }
+</style>
