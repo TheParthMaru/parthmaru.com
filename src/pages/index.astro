@@ -8,6 +8,7 @@ import ProjectList from "../components/home/ProjectList.astro";
 import RecentWriting from "../components/home/RecentWriting.astro";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPublishedWriting, writingPath } from "../lib/writing";
 
 const projectEntries = await getCollection("projects");
 const featuredEntry = projectEntries.find((entry) => entry.data.featured);
@@ -21,24 +22,17 @@ const recentProjects = projectEntries
 		tags: entry.data.tags,
 	}));
 
-let writingEntries: Awaited<ReturnType<typeof getCollection<"writing">>> = [];
-try {
-	writingEntries = await getCollection("writing");
-} catch {
-	writingEntries = [];
-}
-
-const articles = writingEntries
-	.filter((entry) => !entry.data.draft)
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-	.slice(0, 4)
-	.map((entry) => ({
-		id: entry.id,
-		title: entry.data.title,
-		date: entry.data.date,
-		description: entry.data.description,
-		tags: entry.data.tags,
-	}));
+const publishedWriting = await getPublishedWriting();
+const latestArticleHref = publishedWriting[0]
+	? writingPath(publishedWriting[0])
+	: undefined;
+const articles = publishedWriting.slice(0, 4).map((entry) => ({
+	id: entry.id,
+	title: entry.data.title,
+	date: entry.data.date,
+	description: entry.data.description,
+	tags: entry.data.tags,
+}));
 
 const featured = featuredEntry
 	? {
@@ -54,7 +48,7 @@ const featured = featuredEntry
 ---
 
 <BaseLayout>
-	<Hero />
+	<Hero latestArticleHref={latestArticleHref} />
 	<Currently />
 	<section class="work" aria-label="Selected work and writing">
 		<div class="container work__grid">

@@ -1,0 +1,132 @@
+.prose {
+	min-width: 0;
+	max-width: 100%;
+	margin-top: var(--space-7);
+	color: var(--text);
+	font-size: var(--text-md);
+	line-height: var(--leading-body);
+}
+
+.prose > :first-child {
+	margin-top: 0;
+}
+
+.prose > :last-child {
+	margin-bottom: 0;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+	margin: var(--space-7) 0 var(--space-3);
+	color: var(--text);
+	font-weight: 500;
+	letter-spacing: -0.02em;
+	line-height: 1.25;
+	overflow-wrap: break-word;
+}
+
+.prose h2 {
+	font-size: var(--text-lg);
+}
+
+.prose h3,
+.prose h4 {
+	font-size: var(--text-md);
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose pre,
+.prose table,
+.prose hr {
+	margin: 0 0 var(--space-4);
+}
+
+.prose a {
+	color: var(--accent-blue);
+}
+
+.prose strong {
+	font-weight: 500;
+}
+
+.prose em {
+	font-synthesis: style;
+	font-style: italic;
+}
+
+.prose ul,
+.prose ol {
+	padding-left: 1.25rem;
+}
+
+.prose li + li {
+	margin-top: 0.35rem;
+}
+
+.prose li::marker {
+	color: var(--text-muted);
+}
+
+.prose blockquote {
+	padding-left: var(--space-4);
+	border-left: 1px solid var(--border);
+	color: var(--text-muted);
+}
+
+.prose hr {
+	border: 0;
+	border-top: 1px solid var(--border);
+}
+
+.prose img {
+	max-width: 100%;
+	height: auto;
+}
+
+.prose :not(pre) > code {
+	padding: 0.12em 0.35em;
+	border-radius: var(--radius-sm);
+	background: var(--surface-raised);
+	font-family: var(--font);
+	font-size: 0.92em;
+}
+
+.prose pre {
+	max-width: 100%;
+	padding: 1rem 1.1rem;
+	overflow-x: auto;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	font-size: 0.8125rem;
+	line-height: 1.65;
+}
+
+.prose pre code {
+	padding: 0;
+	background: transparent;
+	font-family: var(--font);
+	font-size: inherit;
+}
+
+.prose table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	border-collapse: collapse;
+}
+
+.prose th,
+.prose td {
+	padding: 0.55rem 0.8rem;
+	border-bottom: 1px solid var(--border);
+	text-align: left;
+	vertical-align: top;
+}
+
+.prose th {
+	font-weight: 500;
+}

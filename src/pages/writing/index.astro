@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { formatWritingDate, getPublishedWriting, writingPath } from "../../lib/writing";
+
+const articles = await getPublishedWriting();
+---
+
+<BaseLayout title="Writing — Parth Maru" description="Technical articles by Parth Maru.">
+	<section class="writing-index" aria-labelledby="writing-heading">
+		<div class="container">
+			<h1 id="writing-heading" class="section-heading">Writing</h1>
+			{
+				articles.length === 0 ? (
+					<p class="empty-note">No published articles yet.</p>
+				) : (
+					<ul>
+						{articles.map((article) => (
+							<li>
+								<a class="writing-row" href={writingPath(article)}>
+									<time datetime={article.data.date.toISOString()}>
+										{formatWritingDate(article.data.date)}
+									</time>
+									<span class="writing-row__title">{article.data.title}</span>
+									{article.data.description ? (
+										<span class="writing-row__desc">{article.data.description}</span>
+									) : null}
+									{article.data.tags.length > 0 ? (
+										<ul class="tag-list">
+											{article.data.tags.map((tag) => (
+												<li>{tag}</li>
+											))}
+										</ul>
+									) : null}
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.writing-index {
+		padding-block: var(--space-7) var(--space-9);
+	}
+
+	.writing-index ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.writing-index li + li {
+		border-top: 1px solid var(--border);
+	}
+
+	.writing-row {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		padding-block: var(--space-5);
+		text-decoration: none;
+	}
+
+	time {
+		color: var(--text-muted);
+		font-size: var(--text-xs);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.writing-row__title {
+		color: var(--text);
+		font-size: var(--text-lg);
+		font-weight: 500;
+		overflow-wrap: break-word;
+	}
+
+	.writing-row__desc {
+		max-width: 42rem;
+		color: var(--text-muted);
+		font-size: var(--text-sm);
+		line-height: 1.55;
+	}
+
+	.writing-row:hover .writing-row__title,
+	.writing-row:focus-visible .writing-row__title {
+		color: var(--accent-blue);
+	}
+</style>
