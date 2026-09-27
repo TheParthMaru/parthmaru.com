@@ -66,6 +66,10 @@ body {
 }
 
 body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-height: 100dvh;
 	background: var(--bg);
 	color: var(--text);
 	font-family: var(--font);
@@ -152,7 +156,7 @@ a {
 }
 
 .site-main {
-	min-height: 0;
+	flex: 1 0 auto;
 }
 
 .section-kicker {
