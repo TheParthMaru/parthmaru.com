@@ -1,0 +1,172 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const description =
+	"Software engineer with a background in backend development and an MSc in Advanced Computer Science from the University of Leicester.";
+
+const elsewhere = [
+	{ label: "GitHub", href: site.github },
+	{ label: "LinkedIn", href: site.linkedin },
+	{ label: "Email", href: site.email ? `mailto:${site.email}` : "" },
+].filter((item) => item.href);
+---
+
+<BaseLayout title="About — Parth Maru" description={description}>
+	<article class="about">
+		<div class="container">
+			<h1 id="about-heading" class="section-heading">About</h1>
+			<div class="about__body">
+				<p>
+					I'm Parth Maru, a software engineer with a background in backend development and
+					an MSc in Advanced Computer Science from the University of Leicester.
+				</p>
+				<p>
+					My main interests are backend engineering, Python, APIs, databases, cloud
+					infrastructure and software engineering fundamentals. I enjoy understanding how
+					systems work beneath the abstractions we normally use — whether that's
+					application architecture, deployment, Linux, databases or the behaviour of a
+					programming language.
+				</p>
+				<p>
+					Before moving to the UK, I worked in software engineering and production support
+					in India. More recently, I've also worked in higher education, where I've built
+					data-driven tools and automation to improve student monitoring and reporting.
+				</p>
+
+				<section aria-labelledby="working-on-heading">
+					<h2 id="working-on-heading">What I'm working on</h2>
+					<p>
+						I'm currently strengthening my backend engineering skills with Python and
+						FastAPI while exploring AWS, DevOps and system design.
+					</p>
+					<p>
+						I'm also revisiting some of my previous projects from a different
+						perspective. Rather than simply rebuilding them with another framework, I
+						want to understand the engineering decisions behind them more deeply.
+					</p>
+					<p>This website is part of that process.</p>
+					<p>
+						I use parthmaru.com to document what I'm building, what I'm learning and the
+						things that become clearer along the way.
+					</p>
+				</section>
+
+				<section aria-labelledby="education-heading">
+					<h2 id="education-heading">Education</h2>
+					<div class="about__credential">
+						<p class="about__credential-title">MSc Advanced Computer Science</p>
+						<p class="about__credential-place">University of Leicester</p>
+					</div>
+					<div class="about__credential">
+						<p class="about__credential-title">B.E. Information Technology</p>
+						<p class="about__credential-place">
+							A.C. Patil College of Engineering, University of Mumbai
+						</p>
+					</div>
+				</section>
+
+				<section aria-labelledby="interests-heading">
+					<h2 id="interests-heading">Interests</h2>
+					<p>
+						Backend Engineering · Python · APIs · Databases · FastAPI · AWS · DevOps ·
+						Linux · System Design · Data · AI
+					</p>
+				</section>
+
+				<section aria-labelledby="elsewhere-heading">
+					<h2 id="elsewhere-heading">Elsewhere</h2>
+					{
+						elsewhere.length > 0 ? (
+							<ul class="about__links">
+								{elsewhere.map((item) => {
+									const external =
+										item.href.startsWith("https://") || item.href.startsWith("http://");
+
+									return (
+										<li>
+											<a href={item.href} rel={external ? "noreferrer" : undefined}>
+												{item.label}
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						) : null
+					}
+				</section>
+			</div>
+		</div>
+	</article>
+</BaseLayout>
+
+<style>
+	.about {
+		padding-block: var(--space-7) var(--space-9);
+	}
+
+	.about__body {
+		max-width: 42rem;
+	}
+
+	.about__body > p,
+	.about section p {
+		margin: 0 0 var(--space-4);
+		line-height: var(--leading-body);
+	}
+
+	.about section {
+		margin-top: var(--space-8);
+		padding-top: var(--space-7);
+		border-top: 1px solid var(--border);
+	}
+
+	.about h2 {
+		margin: 0 0 var(--space-5);
+		font-size: var(--text-lg);
+		font-weight: 500;
+		letter-spacing: -0.02em;
+		line-height: 1.25;
+	}
+
+	.about__credential + .about__credential {
+		margin-top: var(--space-5);
+	}
+
+	.about__credential-title,
+	.about__credential-place {
+		margin: 0;
+	}
+
+	.about__credential-title {
+		font-weight: 500;
+	}
+
+	.about__credential-place {
+		margin-top: 0.25rem;
+		color: var(--text-muted);
+	}
+
+	.about__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem var(--space-5);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.about__links a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		color: var(--accent-blue);
+		font-size: var(--text-sm);
+		text-decoration: none;
+	}
+
+	.about__links a:hover,
+	.about__links a:focus-visible {
+		text-decoration: underline;
+	}
+</style>
