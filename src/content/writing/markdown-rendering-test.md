@@ -5,7 +5,7 @@ date: 2026-09-27
 tags:
   - testing
   - markdown
-draft: false
+draft: true
 ---
 
 This is a temporary article for testing the Markdown rendering system on **parthmaru.com**.
