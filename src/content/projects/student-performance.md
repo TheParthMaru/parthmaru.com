@@ -1,9 +1,8 @@
 ---
 title: "Student Performance Monitoring System"
 description: "Placeholder — project details to be confirmed."
-status: "placeholder"
 featured: false
-placeholder: true
+draft: true
 tags: []
 ---
 

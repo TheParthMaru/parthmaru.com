@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import Closing from "../components/home/Closing.astro";
 import Currently from "../components/home/Currently.astro";
 import FeaturedProject from "../components/home/FeaturedProject.astro";
@@ -8,18 +7,18 @@ import ProjectList from "../components/home/ProjectList.astro";
 import RecentWriting from "../components/home/RecentWriting.astro";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPublishedProjects, projectDestination, projectUrl } from "../lib/projects";
 import { getPublishedWriting, writingPath } from "../lib/writing";
 
-const projectEntries = await getCollection("projects");
-const featuredEntry = projectEntries.find((entry) => entry.data.featured);
-const recentProjects = projectEntries
+const publishedProjects = await getPublishedProjects();
+const featuredEntry = publishedProjects.find((entry) => entry.data.featured);
+const recentProjects = publishedProjects
 	.filter((entry) => !entry.data.featured)
 	.map((entry) => ({
-		id: entry.id,
 		title: entry.data.title,
 		description: entry.data.description,
-		placeholder: entry.data.placeholder,
 		tags: entry.data.tags,
+		href: projectDestination(entry.data.github, entry.data.demo),
 	}));
 
 const publishedWriting = await getPublishedWriting();
@@ -36,13 +35,11 @@ const articles = publishedWriting.slice(0, 4).map((entry) => ({
 
 const featured = featuredEntry
 	? {
-			id: featuredEntry.id,
 			title: featuredEntry.data.title,
 			description: featuredEntry.data.description,
 			status: featuredEntry.data.status,
 			tags: featuredEntry.data.tags,
-			github: featuredEntry.data.github || undefined,
-			hasJournal: featuredEntry.data.hasJournal,
+			github: projectUrl(featuredEntry.data.github),
 		}
 	: undefined;
 ---

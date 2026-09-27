@@ -1,10 +1,9 @@
 ---
 export interface ProjectSummary {
-  id: string;
   title: string;
   description: string;
-  placeholder?: boolean;
   tags: string[];
+  href?: string;
 }
 
 interface Props {
@@ -21,26 +20,29 @@ const { projects } = Astro.props;
       <p class="empty-note">No additional projects to show yet.</p>
     ) : (
       <ul>
-        {projects.map((project) => (
-          <li>
-            <a class="project-row" href={`/projects/${project.id}`}>
-              <span class="project-row__title">
-                {project.title}
-                {project.placeholder ? (
-                  <span class="placeholder-flag">Placeholder</span>
+        {projects.map((project) => {
+          const Tag = project.href ? "a" : "div";
+
+          return (
+            <li>
+              <Tag
+                class="project-row"
+                href={project.href}
+                rel={project.href ? "noreferrer" : undefined}
+              >
+                <span class="project-row__title">{project.title}</span>
+                <span class="project-row__desc">{project.description}</span>
+                {project.tags.length > 0 ? (
+                  <ul class="tag-list">
+                    {project.tags.map((tag) => (
+                      <li>{tag}</li>
+                    ))}
+                  </ul>
                 ) : null}
-              </span>
-              <span class="project-row__desc">{project.description}</span>
-              {project.tags.length > 0 ? (
-                <ul class="tag-list">
-                  {project.tags.map((tag) => (
-                    <li>{tag}</li>
-                  ))}
-                </ul>
-              ) : null}
-            </a>
-          </li>
-        ))}
+              </Tag>
+            </li>
+          );
+        })}
       </ul>
     )
   }
@@ -82,8 +84,8 @@ const { projects } = Astro.props;
     line-height: 1.55;
   }
 
-  .project-row:hover .project-row__title,
-  .project-row:focus-visible .project-row__title {
+  a.project-row:hover .project-row__title,
+  a.project-row:focus-visible .project-row__title {
     color: var(--accent-blue);
   }
 </style>

@@ -1,12 +1,10 @@
 ---
 export interface FeaturedProjectData {
-  id: string;
   title: string;
   description: string;
   status?: string;
   tags: string[];
   github?: string;
-  hasJournal?: boolean;
 }
 
 interface Props {
@@ -36,23 +34,15 @@ const statusLabel = project.status === "in-progress" ? "In progress" : project.s
         </ul>
       ) : null
     }
-    <p class="featured__actions">
-      <a class="text-link" href={`/projects/${project.id}`}>Project details →</a>
-      {
-        project.hasJournal ? (
-          <a class="text-link" href={`/projects/${project.id}#journal`}>
-            Development journal →
+    {
+      project.github ? (
+        <p class="featured__actions">
+          <a class="text-link" href={project.github} rel="noreferrer">
+            View on GitHub →
           </a>
-        ) : null
-      }
-      {
-        project.github ? (
-          <a class="button-primary" href={project.github} rel="noreferrer">
-            View on GitHub
-          </a>
-        ) : null
-      }
-    </p>
+        </p>
+      ) : null
+    }
   </div>
 </section>
 

@@ -1,9 +1,8 @@
 ---
 title: "FastAPI Todo API"
 description: "Placeholder — project details to be confirmed."
-status: "placeholder"
 featured: false
-placeholder: true
+draft: false
 tags: []
 ---
 

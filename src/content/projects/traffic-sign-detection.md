@@ -1,9 +1,8 @@
 ---
 title: "Traffic Sign Detection and Recognition"
 description: "Placeholder — project details to be confirmed."
-status: "placeholder"
 featured: false
-placeholder: true
+draft: true
 tags: []
 ---
 
