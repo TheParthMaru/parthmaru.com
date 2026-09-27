@@ -1,40 +1,61 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../data/site";
+import portrait from "../assets/self-picture-1.png";
+import workspace from "../assets/self-picture-2.png";
+import graduation from "../assets/self-picture-3.png";
 
 const description =
 	"Software engineer with a background in backend development and an MSc in Advanced Computer Science from the University of Leicester.";
 
-const elsewhere = [
-	{ label: "GitHub", href: site.github },
-	{ label: "LinkedIn", href: site.linkedin },
-	{ label: "Email", href: site.email ? `mailto:${site.email}` : "" },
-].filter((item) => item.href);
+const beyond = [
+	{ label: "Cooking", emoji: "🍳" },
+	{ label: "Guitar", emoji: "🎸" },
+	{ label: "Piano", emoji: "🎹" },
+	{ label: "Gaming", emoji: "🎮" },
+] as const;
 ---
 
 <BaseLayout title="About — Parth Maru" description={description}>
 	<article class="about">
 		<div class="container">
-			<h1 id="about-heading" class="section-heading">About</h1>
-			<div class="about__body">
-				<p>
-					I'm Parth Maru, a software engineer with a background in backend development and
-					an MSc in Advanced Computer Science from the University of Leicester.
-				</p>
-				<p>
-					My main interests are backend engineering, Python, APIs, databases, cloud
-					infrastructure and software engineering fundamentals. I enjoy understanding how
-					systems work beneath the abstractions we normally use — whether that's
-					application architecture, deployment, Linux, databases or the behaviour of a
-					programming language.
-				</p>
-				<p>
-					Before moving to the UK, I worked in software engineering and production support
-					in India. More recently, I've also worked in higher education, where I've built
-					data-driven tools and automation to improve student monitoring and reporting.
-				</p>
+			<section class="about-split about-split--portrait" aria-labelledby="about-heading">
+				<div class="about-split__copy">
+					<h1 id="about-heading" class="section-heading">About</h1>
+					<p>
+						I'm Parth Maru, a software engineer with a background in backend development and
+						an MSc in Advanced Computer Science from the University of Leicester.
+					</p>
+					<p>
+						My main interests are backend engineering, Python, APIs, databases, cloud
+						infrastructure and software engineering fundamentals. I enjoy understanding how
+						systems work beneath the abstractions we normally use — whether that's
+						application architecture, deployment, Linux, databases or the behaviour of a
+						programming language.
+					</p>
+					<p>
+						Before moving to the UK, I worked in software engineering and production support
+						in India. More recently, I've also worked in higher education, where I've built
+						data-driven tools and automation to improve student monitoring and reporting.
+					</p>
+				</div>
+				<div class="about-figure-wrap">
+					<Image
+						src={portrait}
+						alt="Portrait of Parth Maru"
+						width={880}
+						height={1100}
+						fit="cover"
+						position="centre"
+						widths={[440, 660, 880]}
+						sizes="(min-width: 64rem) 22rem, 100vw"
+						layout="constrained"
+					/>
+				</div>
+			</section>
 
-				<section aria-labelledby="working-on-heading">
+			<section class="about-split about-split--work" aria-labelledby="working-on-heading">
+				<div class="about-split__copy">
 					<h2 id="working-on-heading">What I'm working on</h2>
 					<p>
 						I'm currently strengthening my backend engineering skills with Python and
@@ -50,52 +71,66 @@ const elsewhere = [
 						I use parthmaru.com to document what I'm building, what I'm learning and the
 						things that become clearer along the way.
 					</p>
-				</section>
+				</div>
+				<div class="about-figure-wrap">
+					<Image
+						src={workspace}
+						alt="Illustrated engineering workspace with notes on Python, FastAPI, cloud, DevOps, and system design"
+						widths={[640, 960, 1280]}
+						sizes="(min-width: 64rem) 28rem, 100vw"
+						layout="constrained"
+					/>
+				</div>
+			</section>
 
-				<section aria-labelledby="education-heading">
+			<section class="about-split about-split--education" aria-labelledby="education-heading">
+				<div class="about-split__copy">
 					<h2 id="education-heading">Education</h2>
 					<div class="about__credential">
 						<p class="about__credential-title">MSc Advanced Computer Science</p>
-						<p class="about__credential-place">University of Leicester</p>
+						<p class="about__credential-place">University of Leicester, Leicester, UK</p>
 					</div>
 					<div class="about__credential">
 						<p class="about__credential-title">B.E. Information Technology</p>
 						<p class="about__credential-place">
-							A.C. Patil College of Engineering, University of Mumbai
+							A.C. Patil College of Engineering, Mumbai, India
 						</p>
 					</div>
-				</section>
+				</div>
+				<div class="about-figure-wrap">
+					<Image
+						src={graduation}
+						alt="Parth Maru at his University of Leicester graduation"
+						widths={[480, 720, 960]}
+						sizes="(min-width: 64rem) 22rem, 100vw"
+						layout="constrained"
+					/>
+				</div>
+			</section>
 
-				<section aria-labelledby="interests-heading">
-					<h2 id="interests-heading">Interests</h2>
-					<p>
-						Backend Engineering · Python · APIs · Databases · FastAPI · AWS · DevOps ·
-						Linux · System Design · Data · AI
-					</p>
-				</section>
+			<section class="about-prose" aria-labelledby="interests-heading">
+				<h2 id="interests-heading">Interests</h2>
+				<p>
+					Backend Engineering · Python · APIs · Databases · FastAPI · AWS · DevOps · Linux
+					· System Design · Data · AI
+				</p>
+			</section>
 
-				<section aria-labelledby="elsewhere-heading">
-					<h2 id="elsewhere-heading">Elsewhere</h2>
+			<section class="beyond-block" aria-labelledby="beyond-heading">
+				<h2 id="beyond-heading">Beyond Code</h2>
+				<ul class="beyond">
 					{
-						elsewhere.length > 0 ? (
-							<ul class="about__links">
-								{elsewhere.map((item) => {
-									const external =
-										item.href.startsWith("https://") || item.href.startsWith("http://");
-
-									return (
-										<li>
-											<a href={item.href} rel={external ? "noreferrer" : undefined}>
-												{item.label}
-											</a>
-										</li>
-									);
-								})}
-							</ul>
-						) : null
+						beyond.map((item) => (
+							<li class="beyond__item">
+								<span class="beyond__emoji" aria-hidden="true">
+									{item.emoji}
+								</span>
+								<span>{item.label}</span>
+							</li>
+						))
 					}
-				</section>
-			</div>
+				</ul>
+			</section>
 		</div>
 	</article>
 </BaseLayout>
@@ -103,22 +138,38 @@ const elsewhere = [
 <style>
 	.about {
 		padding-block: var(--space-7) var(--space-9);
+		overflow-x: clip;
 	}
 
-	.about__body {
-		max-width: 42rem;
+	.about-split,
+	.about-prose,
+	.beyond-block {
+		min-width: 0;
 	}
 
-	.about__body > p,
-	.about section p {
-		margin: 0 0 var(--space-4);
-		line-height: var(--leading-body);
+	.about-split {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		align-items: center;
+		gap: var(--space-6);
 	}
 
-	.about section {
+	.about-split + .about-split,
+	.about-prose,
+	.beyond-block {
 		margin-top: var(--space-8);
 		padding-top: var(--space-7);
 		border-top: 1px solid var(--border);
+	}
+
+	.about-split__copy {
+		min-width: 0;
+	}
+
+	.about-split p,
+	.about-prose p {
+		margin: 0 0 var(--space-4);
+		line-height: var(--leading-body);
 	}
 
 	.about h2 {
@@ -127,6 +178,35 @@ const elsewhere = [
 		font-weight: 500;
 		letter-spacing: -0.02em;
 		line-height: 1.25;
+	}
+
+	.about-figure-wrap {
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	.about-figure-wrap :global(img) {
+		display: block;
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+		height: auto;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+	}
+
+	.about-split--portrait .about-figure-wrap :global(img) {
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		object-position: center center;
+	}
+
+	.about-split--work .about-figure-wrap :global(img) {
+		aspect-ratio: 3 / 2;
+		object-fit: contain;
+		object-position: center;
+		background: var(--surface);
 	}
 
 	.about__credential + .about__credential {
@@ -147,26 +227,76 @@ const elsewhere = [
 		color: var(--text-muted);
 	}
 
-	.about__links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.25rem var(--space-5);
+	.beyond {
+		display: grid;
+		grid-template-columns: 1fr;
 		margin: 0;
 		padding: 0;
 		list-style: none;
+		border-top: 1px solid var(--border);
+		border-left: 1px solid var(--border);
 	}
 
-	.about__links a {
-		display: inline-flex;
+	.beyond__item {
+		display: flex;
 		align-items: center;
-		min-height: 2.75rem;
-		color: var(--accent-blue);
-		font-size: var(--text-sm);
-		text-decoration: none;
+		justify-content: center;
+		gap: 0.7rem;
+		min-height: 4.25rem;
+		min-width: 0;
+		padding: var(--space-3) var(--space-4);
+		border-right: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+		color: var(--text);
+		font-size: var(--text-md);
+		font-weight: 500;
 	}
 
-	.about__links a:hover,
-	.about__links a:focus-visible {
-		text-decoration: underline;
+	.beyond__emoji {
+		flex: 0 0 auto;
+		font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+		font-size: 1.15rem;
+		line-height: 1;
+	}
+
+	.beyond__item:hover,
+	.beyond__item:focus-within {
+		background: var(--surface);
+	}
+
+	@media (min-width: 40rem) {
+		.beyond {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	@media (min-width: 48rem) {
+		.about-split--portrait,
+		.about-split--education {
+			grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+			column-gap: clamp(1.5rem, 3vw, 4rem);
+		}
+
+		.about-split--work {
+			grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+			column-gap: clamp(1.5rem, 3vw, 4rem);
+		}
+
+		.about-split--portrait .about-figure-wrap {
+			width: min(100%, 26.25rem);
+			justify-self: end;
+		}
+
+		.about-split--work .about-figure-wrap,
+		.about-split--education .about-figure-wrap {
+			width: 100%;
+			justify-self: stretch;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.beyond {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
 	}
 </style>
